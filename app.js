@@ -58,71 +58,117 @@ var questions = [
 ];
 
 
+  var htmlques = document.getElementById("ques");
+  var htmlopt1 = document.getElementById("opt1");
+  var htmlopt2 = document.getElementById("opt2");
+  var htmlopt3 = document.getElementById("opt3");
+  var radio1 = document.getElementById("radio1");
+  var radio2 = document.getElementById("radio2");
+  var radio3 = document.getElementById("radio3");
+  var getBtn = document.getElementById("btn");
+  var resetBtn = document.getElementById("resetBtn");
+  var startBtn = document.getElementById("startBtn");
+  var timerDiv = document.getElementById("timer");
+  var progress = document.getElementById("progress");
 
+  var index = 0;
+  var score = 0;
+  var timer = 0;
+  var timerInterval;
 
-var getQuet = document.getElementById('quet')
-var getOpts1 = document.getElementById('opts1')
-var getOpts2 = document.getElementById('opts2')
-var getOpts3 = document.getElementById('opts3')
-var index = 0;
-var getDisBtn = document.getElementById('disBtn');
-var result = 0;
+  function startTimer() {
+    timer = 0;
+    timerInterval = setInterval(function () {
+      timer++;
+      timerDiv.innerText = "Time: " + timer + "s";
+    }, 1000);
+  }
 
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
 
+  function loadQuestion() {
+    htmlques.innerText = questions[index].question;
+    htmlopt1.innerText = questions[index].option1;
+    htmlopt2.innerText = questions[index].option2;
+    htmlopt3.innerText = questions[index].option3;
+    progress.innerText = `Question ${index + 1} of ${questions.length}`;
+  }
 
-function next(){
-    var getInputs = document.getElementsByTagName('input');
-    var selectedValue = null;
-    var getValues = [getOpts1.innerText, getOpts2.innerText, getOpts3.innerText];
+  function nextQuestion() {
+  
 
-    for(var i = 0; i < getInputs.length; i++){
-        if (getInputs[i].checked) {
-            selectedValue = getValues[i]; // match index to label text
-            console.log(getInputs[i])
-        }
+    let selectedAnswer = "";
+    if (radio1.checked) selectedAnswer = htmlopt1.innerText;
+    else if (radio2.checked) selectedAnswer = htmlopt2.innerText;
+    else if (radio3.checked) selectedAnswer = htmlopt3.innerText;
+
+    if (selectedAnswer === questions[index].correctOption) {
+      score++;
     }
 
-   
-    if (selectedValue === questions[index].correctOption) {
-        result++;
-    }
+    index++;
+    radio1.checked = false;
+    radio2.checked = false;
+    radio3.checked = false;
+    getBtn.disabled = true;
+    disableOptions();
 
-    for(var i=0; i < getInputs.length; i++){
-        getInputs[i].checked = false
-    }
-
-    if(index > questions.length - 1)  {
-        Swal.fire({
-            title: "Good job!",
-            text: "You clicked the button!",
-            result
-
-        });
-
-        getQuet.innerText = questions[0].question;
-        getOpts1.innerText = questions[0].option1;
-        getOpts2.innerText = questions[0].option2;
-        getOpts3.innerText = questions[0].option3;
-
-        index = 0;
-        result = 0;
+    if (index >= questions.length) {
+      stopTimer();
+      Swal.fire({
+        title: "Quiz Completed!",
+        html: `<h2>Your Score: ${score}/${questions.length}</h2><p>Time Taken: ${timer} seconds</p>`,
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        resetBtn.style.display = "inline-block";
+        getBtn.style.display = "none";
+      });
     } else {
-        getQuet.innerText = questions[index].question;
-        getOpts1.innerText = questions[index].option1;
-        getOpts2.innerText = questions[index].option2;
-        getOpts3.innerText = questions[index].option3;
-
-        index++;
-   
+      loadQuestion();
+      enableOptions();
     }
+  }
 
-    getDisBtn.disabled = true;
-}
+  function btnWork() {
+    getBtn.disabled = false;
+  }
 
-next();
+  function resetQuiz() {
+    index = 0;
+    score = 0;
+    timer = 0;
+    timerDiv.innerText = "Time: 0s";
+    getBtn.disabled = true;
+    getBtn.style.display = "none";
+    resetBtn.style.display = "none";
+    startBtn.style.display = "inline-block";
+    disableOptions();
+  }
 
+  function startQuiz() {
+    index = 0;
+    score = 0;
+    timer = 0;
+    startBtn.style.display = "none";
+    getBtn.style.display = "inline-block";
+    getBtn.disabled = true;
+    resetBtn.style.display = "none";
+    enableOptions();
+    loadQuestion();
+    startTimer();
+  }
 
+  function enableOptions() {
+    radio1.disabled = false;
+    radio2.disabled = false;
+    radio3.disabled = false;
+  }
 
-function btndis(){
-getDisBtn.disabled = false
-}
+  function disableOptions() {
+    radio1.disabled = true;
+    radio2.disabled = true;
+    radio3.disabled = true;
+  }

@@ -1,0 +1,26 @@
+body{
+    background: #020024;
+background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+font-family: "Poppins", sans-serif;
+}
+h1{
+    color: white;
+}
+#timer{
+    color: white;
+}
+div#progress {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+lable {
+    color: white;
+}
+
+.option-container {
+    color: white;
+}
