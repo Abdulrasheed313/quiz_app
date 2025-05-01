@@ -145,13 +145,16 @@ var questions = [
     getBtn.style.display = "none";
     resetBtn.style.display = "none";
     startBtn.style.display = "inline-block";
+    document.getElementsByTagName('input').style.display = "block";
     disableOptions();
   }
 
   function startQuiz() {
+    
     index = 0;
     score = 0;
     timer = 0;
+    
     startBtn.style.display = "none";
     getBtn.style.display = "inline-block";
     getBtn.disabled = true;
@@ -159,6 +162,8 @@ var questions = [
     enableOptions();
     loadQuestion();
     startTimer();
+    
+    
   }
 
   function enableOptions() {
