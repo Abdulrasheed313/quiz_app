@@ -145,7 +145,7 @@ var questions = [
     getBtn.style.display = "none";
     resetBtn.style.display = "none";
     startBtn.style.display = "inline-block";
-    document.getElementsByTagName('input').style.display = "block";
+    document.getElementById("options").style.display = "none";
     disableOptions();
   }
 
@@ -162,7 +162,8 @@ var questions = [
     enableOptions();
     loadQuestion();
     startTimer();
-    
+    document.getElementById("options").style.display = "block";
+
     
   }
 

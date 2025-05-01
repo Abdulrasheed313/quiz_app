@@ -21,9 +21,10 @@
     <div id="progress"></div>
     <hr /><br />
   
-    <div class="main text-center">
+    <div class="main text-center bg-light text-dark">
       <p id="ques"></p>
-  
+      <div id="options" style="display: none;">
+
       <div class="option-container">
         <input disabled type="radio" name="quiz" id="radio1" onclick="btnWork()" />
         <label id="opt1" for="radio1"></label>
@@ -38,6 +39,9 @@
         <input disabled type="radio" name="quiz" id="radio3" onclick="btnWork()" />
         <label id="opt3" for="radio3"></label>
       </div>
+      </div>
+      </div>
+      <div class="text-center">
       <button class="btn btn-warning" id="startBtn" onclick="startQuiz()">Start</button>
       <button class="btn btn-success" id="btn" onclick="nextQuestion()">Next</button>
       <button class="btn btn-info" id="resetBtn" onclick="resetQuiz()">Reset Quiz</button>
